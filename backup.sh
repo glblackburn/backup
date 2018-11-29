@@ -21,7 +21,6 @@ VERBOSE=
 #
 # All log files will be appended to prevent loss of output.  If you need a new log file, clear or set a new log file name outside this script.
 #
-BASEDIR=$(dirname $0)
 SCRIPT_NAME=${0##*/}
 
 if [ "x$1" != "x" ] ; then
