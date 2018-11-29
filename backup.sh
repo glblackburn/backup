@@ -65,6 +65,24 @@ function backup {
 function validateBackupDir {
     if [[ ${BACKUP_TO_DIR} =~ .*@.*:.* ]]; then
 	echo "Backup dir is remote.  take it on faith and proceed. [${BACKUP_TO_DIR}]"
+	#It looks like the rsync settings used creates the parent
+	#directory structure.  So the attempt below is not needed.
+
+#	IFS=':' read -r -a array <<< "$BACKUP_TO_DIR"
+#	USER_HOST=${array[0]}
+#	DEST_DIR=${array[1]}
+#	echo "USER_HOST=[${USER_HOST}]"
+#	echo "DEST_DIR=[${DEST_DIR}]"
+#	if ssh ${USER_HOST} '[ -d ${DEST_DIR} ]'; then
+#	    echo "Remote dir found. proceed. [${BACKUP_TO_DIR}]"
+#	else
+#	    echo "Remote dir found not found! [${BACKUP_TO_DIR}]"
+#	    if ssh ${USER_HOST} 'mkdir -p ${DEST_DIR}'; then
+#		echo "Remote dir created! [${BACKUP_TO_DIR}]"
+#	    else
+#		echo "Remote could not be created! [${BACKUP_TO_DIR}]"
+#	    fi
+#	fi
     else
 	if [[ -d $BACKUP_TO_DIR ]]; then
 	    echo "Backup dir found. proceed. [${BACKUP_TO_DIR}]"
@@ -85,8 +103,8 @@ function validateThereCanBeOnlyOne {
 	echo "Create lock file."
         {
           echo "PID=[$$]"
-echo "in validateThereCanBeOnlyOne"
           echo "LOG=[${LOG}]"
+          echo "DATE=[`date`]"
         } > ${LOCK_FILE}
     fi
 }
@@ -112,9 +130,10 @@ function validateLogDir {
     fi
 }
 
-#
-# cleanEmptyLogFile will use the ${LOG_CLEAN_SED} file to compare the current log file to a base line using sed to zero out match the log file.
-# the function is almost done.  Example file does match the log file.  The full match on the file is not deleted yet.
+# cleanEmptyLogFile will use the ${LOG_CLEAN_SED} file to compare the
+# current log file to a base line using sed to zero out match the log
+# file.  the function is almost done.  Example file does match the log
+# file.  The full match on the file is not deleted yet.
 function cleanEmptyLogFile {
 
     if [ $VERBOSE ] ; then
@@ -177,4 +196,4 @@ if [ $VERBOSE ] ; then
     cat ${LOG}
 fi
 
-cleanEmptyLogFile
+#cleanEmptyLogFile
