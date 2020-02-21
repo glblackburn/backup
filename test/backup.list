@@ -1,12 +1,13 @@
 # Test code not used in typical backup.list files
 TEST_TO_BACKUP=${BASEDIR}/target/to_backup
 mkdir -p ${TEST_TO_BACKUP}
-echo "blah blah blah" > ${TEST_TO_BACKUP}/file1.txt
-echo "foo foo foo" > ${TEST_TO_BACKUP}/file2.txt
-echo "bar bar bar" > ${TEST_TO_BACKUP}/file3.txt
+echo "blah blah blah" >> ${TEST_TO_BACKUP}/file1.txt
+echo "foo foo foo" >> ${TEST_TO_BACKUP}/file2.txt
+echo "bar bar bar" >> ${TEST_TO_BACKUP}/file3.txt
 
 # begin typical backup.list file.
 backup "${BASEDIR}/target/to_backup"
 
-# Test code not used in typcial backup.list files
-rm -r ${TEST_TO_BACKUP}
+## Leave the TEST_TO_BACKUP dir to show full backup process
+## Test code not used in typcial backup.list files
+#rm -r ${TEST_TO_BACKUP}
