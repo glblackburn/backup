@@ -125,7 +125,8 @@ function validateLogDir {
 	fi
     else
 	echo "Log dir not found! [${BACKUP_LOG_DIR}]"
-	exit 3
+	echo "Create log dir."
+        mkdir -p ${BACKUP_LOG_DIR}
     fi
 }
 
