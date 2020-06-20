@@ -58,7 +58,11 @@ function backup {
     echo "${DATE} - backup call with [$1] [${BACKUP_TO_DIR}]"
 ##  rsync --recursive --verbose --progress --perms --times "$1" ${BACKUP_TO_DIR}
 ##  rsync --archive --delete --verbose --progress "$1" ${BACKUP_TO_DIR}
-  rsync --archive --delete --verbose "$1" ${BACKUP_TO_DIR}
+    if [ -z ${EXCLUDE_FILE} ] ; then
+	rsync --archive --delete --verbose "$1" ${BACKUP_TO_DIR}
+    else
+	rsync --archive --delete --verbose --exclude-from=${EXCLUDE_FILE} "$1" ${BACKUP_TO_DIR}
+    fi
 }
 
 function validateBackupDir {
